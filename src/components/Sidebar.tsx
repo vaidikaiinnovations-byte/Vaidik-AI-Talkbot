@@ -145,7 +145,7 @@ export default function Sidebar({
         } ${
           isDark 
             ? "bg-[#0F172A] border-slate-800 text-slate-300" 
-            : "bg-zinc-50 border-zinc-200 text-zinc-700"
+            : "bg-zinc-50 border-zinc-200 text-black"
         }`}
       >
         <div className="flex flex-col h-full overflow-hidden w-80">
@@ -254,10 +254,10 @@ export default function Sidebar({
                         isActive
                           ? isDark 
                             ? "bg-slate-800/80 text-white ring-1 ring-slate-700 shadow-sm" 
-                            : "bg-indigo-50/80 text-indigo-900 ring-1 ring-indigo-100 shadow-sm font-medium"
+                            : "bg-indigo-50/80 text-black ring-1 ring-indigo-100 shadow-sm font-semibold"
                           : isDark
                             ? "hover:bg-slate-900/60 text-slate-400 hover:text-slate-200"
-                            : "hover:bg-zinc-200/50 text-zinc-600 hover:text-zinc-900"
+                            : "hover:bg-zinc-200/50 text-black hover:text-black font-medium"
                       }`}
                     >
                       <div className="flex items-center gap-3 overflow-hidden flex-1 min-w-0">
@@ -420,7 +420,7 @@ export default function Sidebar({
                     {user.email ? user.email.substring(0, 2).toUpperCase() : "U"}
                   </div>
                   <div className="min-w-0">
-                    <p className={`text-xs font-semibold truncate ${isDark ? "text-slate-100" : "text-zinc-800"}`} title={user.email || ""}>
+                    <p className={`text-xs font-bold truncate ${isDark ? "text-slate-100" : "text-black"}`} title={user.email || ""}>
                       {user.email}
                     </p>
                     <p className="text-[9px] text-emerald-500 font-mono flex items-center gap-1">
@@ -443,7 +443,7 @@ export default function Sidebar({
                   ? "bg-slate-900/20 border-slate-800/60" 
                   : "bg-white border-zinc-200 shadow-sm"
               }`}>
-                <p className={`text-xs text-center mb-2.5 leading-normal ${isDark ? "text-slate-400" : "text-zinc-600"}`}>
+                <p className={`text-xs text-center mb-2.5 leading-normal ${isDark ? "text-slate-400" : "text-black font-semibold"}`}>
                   Access your chat conversations from any device.
                 </p>
                 <button

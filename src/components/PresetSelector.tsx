@@ -81,12 +81,12 @@ export default function PresetSelector({
       {/* Intro Greetings */}
       <div className="text-center mb-10 md:mb-14">
         <h2 className={`font-sans font-medium tracking-tight text-3xl md:text-5xl leading-tight ${
-          isDark ? "text-slate-100" : "text-zinc-900"
+          isDark ? "text-slate-100" : "text-black font-bold"
         }`}>
           How can I assist you <span className="text-indigo-600 dark:text-indigo-400">today?</span>
         </h2>
         <p className={`mt-3 max-w-xl mx-auto text-sm md:text-base leading-relaxed ${
-          isDark ? "text-slate-400" : "text-zinc-500"
+          isDark ? "text-slate-400" : "text-black"
         }`}>
           Select one of our preset agent personas or select a topic below to initiate a custom, real-time streamed chat.
         </p>
@@ -112,7 +112,7 @@ export default function PresetSelector({
                   {getIcon(persona.icon, colors.text)}
                 </div>
                 <div>
-                  <h3 className={`font-semibold text-sm ${isDark ? "text-slate-100" : "text-zinc-900"}`}>
+                  <h3 className={`font-semibold text-sm ${isDark ? "text-slate-100" : "text-black font-bold"}`}>
                     {persona.name}
                   </h3>
                   <span className={`text-[10px] font-mono tracking-wide uppercase font-semibold ${colors.text}`}>
@@ -123,7 +123,7 @@ export default function PresetSelector({
 
               {/* Description */}
               <p className={`text-xs leading-relaxed flex-grow opacity-85 mb-4 ${
-                isDark ? "text-slate-400" : "text-zinc-600"
+                isDark ? "text-slate-400" : "text-black font-medium"
               }`}>
                 {persona.description}
               </p>
@@ -143,7 +143,7 @@ export default function PresetSelector({
                     className={`w-full text-left font-sans text-[11px] py-1.5 px-2 rounded-md truncate transition-all ${
                       isDark
                         ? "bg-slate-800/40 hover:bg-slate-800 text-slate-300 hover:text-white"
-                        : "bg-zinc-100 hover:bg-indigo-50 hover:text-indigo-950 text-zinc-600"
+                        : "bg-zinc-100 hover:bg-indigo-50 hover:text-indigo-950 text-black font-semibold"
                     }`}
                     title={prompt}
                   >
@@ -162,7 +162,7 @@ export default function PresetSelector({
       }`}>
         <div className="flex items-center gap-2">
           <ShieldCheck className="text-indigo-600 dark:text-indigo-400" size={16} />
-          <span className={`text-xs font-medium ${isDark ? "text-slate-300" : "text-zinc-700"}`}>
+          <span className={`text-xs font-medium ${isDark ? "text-slate-300" : "text-black"}`}>
             Secure Server-Side Grounding
           </span>
         </div>

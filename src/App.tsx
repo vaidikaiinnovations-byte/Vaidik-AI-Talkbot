@@ -130,6 +130,10 @@ export default function App() {
       const themePref = localStorage.getItem("ai_chatbot_theme");
       if (themePref === "dark") {
         setIsDark(true);
+        document.documentElement.classList.add("dark");
+      } else {
+        setIsDark(false);
+        document.documentElement.classList.remove("dark");
       }
     } catch (e) {
       console.error("Failed to load local storage theme", e);
@@ -211,6 +215,11 @@ export default function App() {
     const nextTheme = !isDark;
     setIsDark(nextTheme);
     localStorage.setItem("ai_chatbot_theme", nextTheme ? "dark" : "light");
+    if (nextTheme) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
   };
 
   // Create a new session with custom settings
@@ -221,7 +230,7 @@ export default function App() {
       title: `${defaultPersona.name} Chat`,
       messages: [],
       createdAt: new Date().toLocaleTimeString(),
-      modelName: "gemini-3.5-flash",
+      modelName: "gemini-3.5-pro",
       systemInstruction: defaultPersona.systemInstruction,
       temperature: 0.7,
       searchGrounding: false
@@ -550,7 +559,7 @@ export default function App() {
       title: `${persona.name} Chat`,
       messages: [],
       createdAt: new Date().toLocaleTimeString(),
-      modelName: "gemini-3.5-flash",
+      modelName: "gemini-3.5-pro",
       systemInstruction: persona.systemInstruction,
       temperature: 0.7,
       searchGrounding: false
@@ -581,7 +590,7 @@ export default function App() {
 
   return (
     <div className={`flex h-screen w-screen overflow-hidden font-sans transition-colors duration-300 ${
-      isDark ? "bg-[#0B0F19] text-slate-100" : "bg-[#fdfdfd] text-slate-800"
+      isDark ? "dark bg-[#0B0F19] text-slate-100" : "bg-[#fdfdfd] text-slate-800"
     }`}>
       
       {/* Sidebar Panel */}
@@ -615,7 +624,7 @@ export default function App() {
             {activeSession ? (
               <div className="flex items-center gap-2 px-3 py-1 bg-slate-150 dark:bg-slate-800/80 rounded-full border border-slate-200 dark:border-slate-700">
                 <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></div>
-                <span className="text-xs font-bold uppercase tracking-wide tracking-tighter opacity-80 text-slate-700 dark:text-slate-200">
+                <span className="text-xs font-bold uppercase tracking-wide tracking-tighter opacity-80 text-black dark:text-slate-200">
                   Model: {AVAILABLE_MODELS.find(m => m.id === activeSession.modelName)?.name || "Gemini"}
                 </span>
               </div>
@@ -682,7 +691,7 @@ export default function App() {
               <div className={`p-4 rounded-xl border border-dashed flex items-center gap-4 ${
                 isDark 
                   ? "bg-slate-900/30 border-slate-800/80 text-slate-300"
-                  : "bg-indigo-50/20 border-indigo-200/60 text-slate-700"
+                  : "bg-indigo-50/20 border-indigo-200/60 text-black"
               }`}>
                 <div className="p-2 bg-indigo-600 text-white rounded-lg">
                   <Bot size={18} />
@@ -715,7 +724,7 @@ export default function App() {
                     {/* Content Box */}
                     <div className={`flex-1 max-w-[85%] ${isUser ? "text-right" : "text-left"}`}>
                       <div className={`text-xs font-semibold mb-1 opacity-60 ${
-                        isDark ? "text-slate-300" : "text-slate-600"
+                        isDark ? "text-slate-300" : "text-black"
                       }`}>
                         {isUser ? "You" : "Assistant"} • {msg.timestamp}
                       </div>
@@ -725,7 +734,7 @@ export default function App() {
                           ? "bg-indigo-600 text-white shadow-sm shadow-indigo-600/10 rounded-tr-none text-left" 
                           : isDark
                             ? "bg-slate-900/60 border border-slate-800 text-slate-200 rounded-tl-none"
-                            : "bg-[#f8fafc] border border-slate-200 text-slate-800 rounded-tl-none shadow-sm"
+                            : "bg-[#f8fafc] border border-slate-200 text-black rounded-tl-none shadow-sm"
                       }`}>
                         {msg.image && (
                           <div className="mb-3 max-w-xs md:max-w-sm rounded-xl overflow-hidden border border-zinc-200/20 dark:border-slate-800/80 shadow-sm bg-white dark:bg-slate-950">
@@ -856,15 +865,11 @@ export default function App() {
                 handleSendMessage();
               }}
             >
-              <div className={`rounded-2xl border shadow-sm p-2 transition-all duration-200 ${
-                isDark 
-                  ? "bg-slate-900 border-slate-800 focus-within:border-indigo-500 focus-within:ring-2 focus-within:ring-indigo-500/20" 
-                  : "bg-white border-slate-200 focus-within:border-indigo-400 focus-within:ring-2 focus-within:ring-indigo-400/20"
-              }`}>
+              <div className="rounded-2xl border border-slate-200 bg-white shadow-sm p-2 transition-all duration-200 focus-within:border-indigo-400 focus-within:ring-2 focus-within:ring-indigo-400/20">
                 {/* Optional Image Preview strip */}
                 {imagePreviewUrl && (
-                  <div className="flex items-center gap-3 p-3 border-b border-zinc-100 dark:border-slate-800/60">
-                    <div className="relative group w-16 h-16 rounded-xl overflow-hidden border border-zinc-200 dark:border-slate-700 bg-zinc-50 dark:bg-slate-950 flex-shrink-0">
+                  <div className="flex items-center gap-3 p-3 border-b border-zinc-100">
+                    <div className="relative group w-16 h-16 rounded-xl overflow-hidden border border-zinc-200 bg-zinc-50 flex-shrink-0">
                       <img 
                         src={imagePreviewUrl} 
                         alt="Attachment preview" 
@@ -881,8 +886,8 @@ export default function App() {
                       </button>
                     </div>
                     <div>
-                      <p className="text-xs font-semibold text-zinc-700 dark:text-slate-300">Image attachment selected</p>
-                      <p className="text-[10px] text-zinc-400 dark:text-slate-500 font-mono">Ready to analyze with Vaidik AI innovations</p>
+                      <p className="text-xs font-semibold text-zinc-700">Image attachment selected</p>
+                      <p className="text-[10px] text-zinc-400 font-mono">Ready to analyze with Vaidik AI innovations</p>
                     </div>
                   </div>
                 )}
@@ -907,12 +912,12 @@ export default function App() {
                           ? "Message or tap Mic to dictate / Image to attach..." 
                           : "Ask a follow-up or query another topic..."
                     }
-                    className="w-full px-4 py-3 bg-transparent outline-none resize-none text-sm border-0 focus:ring-0 focus:outline-none text-slate-800 dark:text-slate-100 placeholder-zinc-400 dark:placeholder-slate-500"
+                    className="w-full px-4 py-3 bg-transparent outline-none resize-none text-sm border-0 focus:ring-0 focus:outline-none text-black placeholder-zinc-400 font-semibold"
                   />
                 </div>
 
                 {/* Toolbar Actions Bar */}
-                <div className="flex items-center justify-between px-3 py-1.5 border-t border-zinc-50 dark:border-slate-800/40">
+                <div className="flex items-center justify-between px-3 py-1.5 border-t border-zinc-100">
                   <div className="flex items-center gap-2">
                     {/* Image input selector */}
                     <label className="cursor-pointer">
@@ -923,11 +928,7 @@ export default function App() {
                         className="hidden"
                         disabled={isGenerating}
                       />
-                      <div className={`p-2 rounded-xl transition-all hover:scale-105 ${
-                        isDark 
-                          ? "text-slate-400 hover:text-white hover:bg-slate-800" 
-                          : "text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100"
-                      }`} title="Attach photo or screen capture for analysis">
+                      <div className="p-2 rounded-xl transition-all hover:scale-105 text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100" title="Attach photo or screen capture for analysis">
                         <Image size={18} />
                       </div>
                     </label>
@@ -940,9 +941,7 @@ export default function App() {
                       className={`p-2 rounded-xl transition-all hover:scale-105 relative ${
                         isListening
                           ? "bg-rose-500 text-white animate-pulse"
-                          : isDark
-                            ? "text-slate-400 hover:text-white hover:bg-slate-800"
-                            : "text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100"
+                          : "text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100"
                       }`}
                       title={isListening ? "Listening... click to stop" : "Dictate via voice input"}
                     >
@@ -967,7 +966,7 @@ export default function App() {
                       <button
                         type="button"
                         onClick={() => setInput("")}
-                        className="p-1.5 px-2 rounded-lg text-xs font-semibold opacity-60 hover:opacity-100 hover:bg-zinc-100 dark:hover:bg-slate-800 transition-colors"
+                        className="p-1.5 px-2 rounded-lg text-xs font-semibold text-zinc-500 hover:text-zinc-950 hover:bg-zinc-100 transition-colors"
                       >
                         Clear
                       </button>
@@ -978,7 +977,7 @@ export default function App() {
                       disabled={(!input.trim() && !selectedImage) || isGenerating}
                       className={`px-4 py-2 rounded-xl shadow transition-all duration-200 text-xs font-semibold flex items-center gap-1.5 ${
                         (!input.trim() && !selectedImage) || isGenerating
-                          ? "bg-zinc-100 dark:bg-slate-800 text-zinc-400 dark:text-slate-600 cursor-not-allowed shadow-none"
+                          ? "bg-zinc-100 text-zinc-400 cursor-not-allowed shadow-none"
                           : "bg-indigo-600 text-white hover:bg-indigo-700 active:scale-95 shadow-indigo-600/10"
                       }`}
                       title="Send Dialogue Query"
