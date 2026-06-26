@@ -7,8 +7,15 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+// FIX START: Safe cross-environment path resolution
+const __filename = typeof import.meta.url !== 'undefined' 
+  ? fileURLToPath(import.meta.url) 
+  : __filename;
+
+const __dirname = typeof __dirname !== 'undefined' 
+  ? __dirname 
+  : path.dirname(__filename);
+// FIX END
 
 const app = express();
 const PORT = Number(process.env.PORT) || 3000;
