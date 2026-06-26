@@ -12,7 +12,7 @@ const currentDirname = typeof __Dirname !== 'undefined'
 : path.dirname(fileURLToPath(import.meta.URL));
 
 const app = express();
-constr PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
 
